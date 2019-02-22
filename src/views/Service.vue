@@ -2,18 +2,13 @@
 .home{
   width:100%;height:100vh;position: relative;overflow: auto;padding:0 15px;box-sizing: border-box;
 }
-.btn{
-  width: 40px;height: 40px;line-height: 40px;font-size: 12px;
-  position: absolute;right: 15px;bottom:120px;
-  background: #33c9d4;border-radius:50%;color: #fff;text-align: center;
-}
+
 </style>
 <template>
   <div class="home">
     <ul class="list">
       <li class="item"></li>
     </ul>
-    <div @click="contant" class="btn">客服</div>
   </div>
 </template>
 
@@ -27,11 +22,14 @@ export default {
     }
   },
   created(){
-    document.title = '客户端'
+    document.title = '客服端'
   },
   methods:{
     contant(){
       this.$router.push('/conversation')
+    },
+    service(val){
+      console.log('conversation发给客户端的'+ val)
     }
   }
 };
