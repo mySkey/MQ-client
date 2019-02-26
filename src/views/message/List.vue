@@ -1,6 +1,9 @@
 <style scoped>
 .message{
-  padding: 4rem 1rem;
+  padding: 0 1rem;
+}
+.notice{
+  font-size: 0.5rem;padding:1rem;color: #33c9d4;
 }
 .item{
   border-bottom: 1px solid #eee;
@@ -12,6 +15,7 @@
 </style>
 <template>
   <div class="message">
+    <div v-if="base_notice" class="notice">公告：{{base_notice}}</div>
     <div @click="toConversation(v)" class="item" v-for="(v,k) in users" :key="k">
       <img class="image" :src="i_resource + v.avatar" alt="">
     </div>
@@ -25,6 +29,7 @@ export default {
   data(){
     return{
       i_resource:'',
+      base_notice: '',
       users:[]
     }
   },
@@ -43,6 +48,9 @@ export default {
     },
     toConversation(row){
       this.$router.push({ path:'/message/conversation', query:{ user_id: row.id } })
+    },
+    notice(val){
+      this.base_notice = val;
     }
   }
 };

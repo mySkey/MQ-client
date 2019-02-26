@@ -18,10 +18,12 @@ export default {
       this.$router.replace('/login')
     },
     notice(val) {
-      console.log('系统通知： ', val);
+      console.log('公告： ' + val);
+      this.$emit('notice', val)
     },
     chat(val){
-      console.log(val)
+      console.log('聊天： ' + val);
+      this.$emit('chat', val)
     }
   },
   methods:{

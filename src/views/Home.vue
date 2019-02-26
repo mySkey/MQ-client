@@ -21,7 +21,12 @@ export default {
     document.title = '会话列表'
   },
   methods:{
-    
+    notice(val){
+      this.$refs.router.notice && this.$refs.router.notice(val)
+    },
+    chat(val){
+      this.$refs.router.chat && this.$refs.router.chat(val)
+    },
   }
 };
 </script>

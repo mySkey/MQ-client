@@ -3,7 +3,7 @@
     <keep-alive>
       <router-view ref="router" />
     </keep-alive>
-    <socket />
+    <socket @notice="notice" />
   </div>
 </template>
 <script>
@@ -12,11 +12,16 @@ export default {
   components:{ Socket },
   data(){
     return{
-
+      
     }
   },
   methods:{
-    
+    notice(val){
+      this.$refs.router.notice && this.$refs.router.notice(val)
+    },
+    chat(val){
+      this.$refs.router.chat && this.$refs.router.chat(val)
+    },
   }
 }
 </script>
