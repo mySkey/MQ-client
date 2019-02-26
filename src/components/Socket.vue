@@ -10,20 +10,17 @@ export default {
       id: ''
     }
   },
-  mounted(){
-    
-  },
   sockets: {
-    connect: function () {
-      console.log('socket connected');
+    connect() {
       this.id = this.$socket.id;
-      this.$emit('connected', this.id);
+      console.log('socket connected ' + this.id)
+      common.setLStore('user', { socket_id: this.id })
+      this.$router.replace('/login')
     },
-    service: function (val) {
-      this.$emit('service', val)
-      console.log('客服收到的消息', val);
+    notice(val) {
+      console.log('系统通知： ', val);
     },
-    chat: function(val){
+    chat(val){
       console.log(val)
     }
   },

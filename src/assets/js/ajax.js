@@ -8,9 +8,12 @@ export let ajax = {
         params: data,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          'Token': localStorage.getItem('token') || ''
+          'Token': common.getLStore('token') || ''
         }
       }).then((res) => {
+        if(res.code == 402){
+          this.$router.replace('/login')
+        }
         return resolve(res.data);
       });
     }).catch((err) => {
@@ -32,7 +35,7 @@ export let ajax = {
         }],
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          'Token': localStorage.getItem('token') || ''
+          'Token': common.getLStore('token') || ''
         }
       }).then((res) => {
         return resolve(res.data);

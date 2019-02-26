@@ -7,7 +7,7 @@
 <template>
   <div class="home">
     <ul class="list">
-      <li class="item"></li>
+      <li class="item">111</li>
     </ul>
   </div>
 </template>

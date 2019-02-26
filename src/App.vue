@@ -3,7 +3,7 @@
     <keep-alive>
       <router-view ref="router" />
     </keep-alive>
-    <socket ref="socket" @service="service" @connected="connected" />
+    <socket />
   </div>
 </template>
 <script>
@@ -16,16 +16,10 @@ export default {
     }
   },
   methods:{
-    connected(id){
-      console.log(id)
-    },
-    service(val){
-      this.$refs.router.service && this.$refs.router.service(val);
-    }
+    
   }
 }
 </script>
-
 <style lang="less">
 @import url('./assets/css/reset.css');
 #app {

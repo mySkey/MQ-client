@@ -24,8 +24,8 @@
     <div class="content">
       <div class="message"></div>
       <div class="send">
-        <input v-model="content" class="inp" type="text">
-        <div @click="contantService" class="btn">发送</div>
+        <input v-model="msgForm.content" class="inp" type="text">
+        <div @click="send" class="btn">发送</div>
       </div>
     </div>
   </div>
@@ -37,19 +37,24 @@ export default {
   name: "conversation",
   data(){
     return{
-      content: ''
+      msgForm:{
+        user_id: ''
+      }
     }
   },
   created(){
+    
+  },
+  activated(){
     document.title = '会话中'
+    this.msgForm.user_id = this.$route.query.user_id || '';
   },
   methods:{
-    contantService(){
-      // let socket_id = localStorage.getItem('socket_id')
-      // ajax.get('http://localhost:8000/api/send', {name: 'mySkey',content:this.content, socket_id}).then(res=>{
-      //   console.log(res)
-      // })
-    }
+    send(){
+      ajax.post('message/send', this.msgForm).then(res=>{
+        console.log(res)
+      })
+    },
   }
 };
 </script>

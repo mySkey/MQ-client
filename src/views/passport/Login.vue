@@ -54,21 +54,18 @@ export default {
     return{
       userForm: {
         name: '',
-        pwd: ''
+        pwd: '',
+        socket_id: ''
       },
       saving: false
     }
   },
   activated(){
     document.title = '用户登录'
-    this.userForm.name = this.$route.query.name || ''
-    ajax.get('admin/list', {}).then(res=>{
-        if(res.code == 0){
-          console.log(res)
-        }else{
-          this.$alert(res.msg)
-        }
-      })
+    // this.userForm.name = '1663654533@qq.com'
+    // this.userForm.pwd = 'qq1663654533'
+    this.userForm.socket_id = common.getLStore('user').socket_id || ''
+    if(this.userForm.pwd && this.userForm.name) this.login();
   },
   methods:{
     login(){
@@ -78,7 +75,8 @@ export default {
       ajax.post('passport/login', this.userForm).then(res=>{
         this.saving = false;
         if(res.code == 0){
-          localStorage.setItem('token', res.data.token)
+          common.setLStore('token', res.data.token)
+          this.$router.replace('/message')
         }else{
           this.$alert(res.msg)
         }

@@ -3,11 +3,14 @@ import Router from "vue-router";
 
 Vue.use(Router);
 const routes = [
-  { path: "/", name: "home", component: () => import('./views/Home.vue') },
-  { path: "/login", name: "user_login", component: () => import('./views/user/Login.vue') },
-  { path: "/register", name: "user_register", component: () => import('./views/user/Register.vue') },
-  { path: "/conversation", name: "conversation", component: () => import('./views/Conversation.vue') },
-  { path: "/service", name: "service", component: () => import('./views/Service.vue') },
+  { path: "/", redirect: '/message'},
+  { path: "/home", name: 'home', component: () => import('./views/Home.vue'), children: [
+    { path: "/message", name: "message", component: () => import('./views/message/List.vue') },
+    { path: "/message/conversation", name: "message_conversation", component: () => import('./views/message/Conversation.vue') },
+    { path: "/message/service", name: "message_service", component: () => import('./views/message/Service.vue') },
+  ]},
+  { path: "/login", name: "user_login", component: () => import('./views/passport/Login.vue') },
+  { path: "/register", name: "user_register", component: () => import('./views/passport/Register.vue') },
 ]
 const router = new Router({
   mode: "hash",
