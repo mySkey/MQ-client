@@ -1,33 +1,45 @@
-global.ajax = {
-  get(url, data) {
-    return this.getData(url, data, 'get')
-  },
-  post(url, data) {
-    return this.getData(url, data, 'post')
-  },
-  getData(url, data='', method = 'get') {
+export let api_url = process.env.NODE_ENV == 'development' ? 'http://localhost:8000' : 'http://socket.22family.com';
+export let ajax = {
+  async get(url, data) {
     return new Promise((resolve, reject) => {
-      method = method.toUpperCase()
-      let xhr = new XMLHttpRequest()
-      if (method == 'GET' && data){
-        url += '?'
-        for(let i in data){
-          url += (i + '=' + data[i] + '&')
+      vue.$axios({
+        url: api_url + '/api/' + url,
+        method: 'get',
+        params: data,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          'Token': localStorage.getItem('token') || ''
         }
-        url = url.slice(0, url.length - 1)
-      }
-      xhr.open(method, url, true)
-      method = 'GET' ? xhr.send() : xhr.send(data);
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          try {
-            var response = JSON.parse(xhr.responseText);
-            resolve(response);
-          } catch (e) {
-            reject(e);
+      }).then((res) => {
+        return resolve(res.data);
+      });
+    }).catch((err) => {
+      return err;
+    });
+  },
+  async post(url, data) {
+    return new Promise((resolve, reject) => {
+      vue.$axios({
+        url: api_url + '/api/' + url,
+        method: 'post',
+        data: data,
+        transformRequest: [function (data) {
+          let ret = ''
+          for (let i in data) {
+            ret += encodeURIComponent(i) + '=' + encodeURIComponent(data[i]) + '&'
           }
+          return ret;
+        }],
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          'Token': localStorage.getItem('token') || ''
         }
-      }
-    })
+      }).then((res) => {
+        return resolve(res.data);
+      });
+    }).catch((err) => {
+      return err;
+    });
   }
-}
+};
+

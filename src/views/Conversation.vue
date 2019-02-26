@@ -45,11 +45,11 @@ export default {
   },
   methods:{
     contantService(){
-      let socket_id = localStorage.getItem('socket_id')
-      ajax.get('http://localhost:8000/api/send', {name: 'mySkey',content:this.content, socket_id}).then(res=>{
-        console.log(res)
-      })
-    },
+      // let socket_id = localStorage.getItem('socket_id')
+      // ajax.get('http://localhost:8000/api/send', {name: 'mySkey',content:this.content, socket_id}).then(res=>{
+      //   console.log(res)
+      // })
+    }
   }
 };
 </script>

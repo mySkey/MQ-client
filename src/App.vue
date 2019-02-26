@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view ref="router" />
+    <keep-alive>
+      <router-view ref="router" />
+    </keep-alive>
     <socket ref="socket" @service="service" @connected="connected" />
   </div>
 </template>
@@ -27,12 +29,15 @@ export default {
 <style lang="less">
 @import url('./assets/css/reset.css');
 #app {
+  width: 100%;
+  min-height: 100%;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   scroll-behavior: smooth;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 #nav {
   padding: 30px;

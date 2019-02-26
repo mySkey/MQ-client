@@ -1,15 +1,23 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
+
+import axios from 'axios';
+Vue.prototype.$axios = axios;
+
 import VueSocketio from 'vue-socket.io';
 import socketio from 'socket.io-client';
-import './assets/js/ajax.js'
+import './assets/css/style.css'
+import { api_url, ajax } from './assets/js/ajax.js'
+import Alert from './components/Alert'
 
-Vue.use(VueSocketio, socketio('http://127.0.0.1:8000/'));
+Vue.use(Alert);
+Vue.use(VueSocketio, socketio(api_url));
+global.ajax = ajax;
 
 Vue.config.productionTip = false;
 
-new Vue({
+global.vue = new Vue({
   router,
   render: h => h(App)
 }).$mount("#app");

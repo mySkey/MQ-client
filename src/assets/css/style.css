@@ -1,0 +1,18 @@
+.df{
+  display: flex;
+}
+.df-j-b{
+  display: flex;
+  justify-content: space-between;
+}
+.df-col{
+  display: flex;
+  flex-direction: column;
+}
+.df-j-c{
+  display: flex;
+  justify-content: center;
+}
+.df1{
+  flex: 1;
+}
