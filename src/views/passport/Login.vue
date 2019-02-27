@@ -77,7 +77,7 @@ export default {
         common.hideLoading()
         if(res.code == 0){
           common.setLStore('token', res.data.token)
-          common.setStore('user', { name:this.userForm.name,socket_id:this.userForm.socket_id })
+          common.setStore('user', { email:res.data.email,socket_id:this.userForm.socket_id })
           this.$router.replace('/message')
         }else{
           common.alert(res.msg)

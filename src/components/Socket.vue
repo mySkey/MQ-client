@@ -16,7 +16,7 @@ export default {
       console.log('socket connected ' + this.id)
       common.setStore('user', { socket_id: this.id })
       ajax.post('user/updateSocket', {socket_id:this.id}).then(res=>{
-        console.log(res.msg)
+        common.setStore('user', { email:res.data.email,socket_id:this.id })
       })
       //this.$router.replace('/login') //后台接口重启后需重新验证
     },

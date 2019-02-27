@@ -26,7 +26,7 @@
       <div class="send">
         <input v-model="msgForm.content" class="inp" type="text">
         <div @click="send" class="btn">发送</div>
-        <div v-if="user.name == '476168710@qq.com'" @click="notice" class="btn">通知</div>
+        <div v-if="email == '476168710@qq.com'" @click="sendNotice" class="btn">通知</div>
       </div>
     </div>
   </div>
@@ -38,7 +38,7 @@ export default {
   name: "conversation",
   data(){
     return{
-      user: {},
+      email: {},
       msgForm:{
         user_id: '',
         content: ''
@@ -50,7 +50,7 @@ export default {
   },
   activated(){
     document.title = '会话中'
-    this.user = common.getStore('user') || {}
+    this.email = common.getStore('user').email || ''
     this.msgForm.user_id = this.$route.query.user_id || '';
   },
   methods:{
@@ -59,10 +59,10 @@ export default {
         console.log(res)
       })
     },
-    notice(){
+    sendNotice(){
       const socket_id = common.getStore('user').socket_id;
       ajax.post('message/notice', {socket_id,content:this.msgForm.content}).then(res=>{
-        common.alert(res.msg)
+        //common.alert(res.msg)
       })
     }
   }
