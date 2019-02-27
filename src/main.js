@@ -11,9 +11,13 @@ import './assets/css/style.css'
 
 import './assets/js/common.js'
 import { api_url, ajax } from './assets/js/ajax.js'
-import Alert from './components/Alert'
 
-Vue.use(Alert);
+// 按需加载Vant组件
+import { Toast, Lazyload } from 'vant'
+const plugins = [Toast, Lazyload]
+plugins.forEach(v => Vue.use(v))
+
+
 Vue.use(VueSocketio, socketio(api_url));
 global.ajax = ajax;
 

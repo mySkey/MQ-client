@@ -64,31 +64,33 @@ export default {
     document.title = '用户登录'
     // this.userForm.name = '1663654533@qq.com'
     // this.userForm.pwd = 'qq1663654533'
-    this.userForm.socket_id = common.getLStore('user').socket_id || ''
+    this.userForm.socket_id = common.getStore('user').socket_id || ''
     if(this.userForm.pwd && this.userForm.name) this.login();
   },
   methods:{
     login(){
-      if(!this.checkForm()) return;
-      if(this.saving) return;
+      if(!this.checkForm()) return false;
       this.saving = true;
+      common.showLoading('登陆中···')
       ajax.post('passport/login', this.userForm).then(res=>{
         this.saving = false;
+        common.hideLoading()
         if(res.code == 0){
           common.setLStore('token', res.data.token)
+          common.setStore('user', { name:this.userForm.name,socket_id:this.userForm.socket_id })
           this.$router.replace('/message')
         }else{
-          this.$alert(res.msg)
+          common.alert(res.msg)
         }
       })
     },
     checkForm(){
       if(this.userForm.name === ''){
-        this.$alert('手机号 / 邮箱不能为空！')
+        common.alert('手机号 / 邮箱不能为空！')
         return false
       }
       if(this.userForm.pwd === '' || this.pwd2 === ''){
-        this.$alert('密码不能为空！')
+        common.alert('密码不能为空！')
         return false
       }
       return true

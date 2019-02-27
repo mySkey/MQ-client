@@ -33,4 +33,40 @@ global.common = {
   clearLStore: function () {
     localStorage.clear();
   },
+  showLoading(content) {
+    vue.$toast({
+      type: 'loading',
+      duration: 0,
+      forbidClick: true,
+      mask: true,
+      message: content || '加载中...'
+    });
+  },
+  hideLoading() {
+    vue.$toast.clear();
+  },
+  toast(content, position = 'middle', duration = 3000, type = 'text') {
+    vue.$toast({
+      type,
+      message: content,
+      duration,
+      position
+    })
+  },
+  alert(content) {
+    vue.$dialog.alert({
+      title: '温馨提示',
+      message: content
+    })
+  },
+  confirm(content, confirm, cancel) {
+    vue.$dialog.confirm({
+      title: '温馨提示',
+      message: content
+    }).then(() => {
+      confirm && confirm();
+    }).catch(() => {
+      cancel && cancel();
+    })
+  },
 }

@@ -90,19 +90,19 @@ export default {
   methods:{
     sendCheck(){
       if(this.adopt_num === ''){
-        this.$alert('请输入手机号 / 邮箱');
+      common.alert('请输入手机号 / 邮箱');
         return false
       }
       if(this.adopt_num.match('@')){
         var reg = reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
         reg.test(this.adopt_num) ? this.userForm.email = this.adopt_num : '';
         if(!reg.test(this.adopt_num)){
-          this.$alert('邮箱格式错误')
+          common.alert('邮箱格式错误')
           return false
         }
       }else{
         if(!(/^1[34578]\d{9}$/.test(this.adopt_num))){ 
-          this.$alert("手机号码有误，请重填");
+          common.alert("手机号码有误，请重填");
           return false;
         }else{
           this.userForm.email = ''
@@ -120,7 +120,7 @@ export default {
             this.base_check_num = '';
           }, 1000 * 60 * 3);
         }else{
-          this.$alert(res.msg)
+          common.alert(res.msg)
         }
       })
     },
@@ -132,38 +132,40 @@ export default {
       }
       if(this.saving) return false;
       this.saving = true;
+      common.showLoading('注册中···')
 
       ajax.post('passport/register', this.userForm).then(res=>{
         this.saving = false;
+        common.hideLoading()
         if(res.code == 0){
           const query = res.data;
           this.base_check_num = '';
           this.$router.replace({ path:'/login', query })
-          this.$alert('注册成功！');
+          common.alert('注册成功！');
         }else{
-          this.$alert(res.msg)
+          common.alert(res.msg)
         }
       })
     },
     checkForm(){
       if(this.adopt_num === ''){
-        this.$alert('手机号 / 邮箱不能为空！')
+        common.alert('手机号 / 邮箱不能为空！')
         return false
       }
       if(this.userForm.check_num === ''){
-        this.$alert('验证码不能为空！')
+        common.alert('验证码不能为空！')
         return false
       }
       if(md5(this.userForm.check_num) != this.base_check_num){
-        this.$alert('验证码错误！')
+        common.alert('验证码错误！')
         return false;
       }
       if(this.pwd1 === '' || this.pwd2 === ''){
-        this.$alert('密码不能为空！')
+        common.alert('密码不能为空！')
         return false
       }
       if(this.pwd1 !== this.pwd2){
-        this.$alert('密码不一致！');
+        common.alert('密码不一致！');
         return false
       }
       return true

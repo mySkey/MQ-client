@@ -1,4 +1,4 @@
-export let api_url = process.env.NODE_ENV == 'development' ? 'http://localhost:8000' : 'http://socket.22family.com';
+export let api_url = process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'http://mq.22family.com';
 export let ajax = {
   async get(url, data) {
     return new Promise((resolve, reject) => {

@@ -10,7 +10,7 @@
   width:100%;display:flex;position: absolute;bottom: 20px;background: #eee;
 }
 .send .inp{
-  flex:1;width:100%;border:none;border-radius:4px;padding-left:15px;
+  flex:1;width:100%;border:none;border-radius:4px;padding-left:15px;font-size: 0.5rem;
 }
 .send .inp:focus{
   outline: none;
@@ -26,6 +26,7 @@
       <div class="send">
         <input v-model="msgForm.content" class="inp" type="text">
         <div @click="send" class="btn">发送</div>
+        <div v-if="user.name == '476168710@qq.com'" @click="notice" class="btn">通知</div>
       </div>
     </div>
   </div>
@@ -37,8 +38,10 @@ export default {
   name: "conversation",
   data(){
     return{
+      user: {},
       msgForm:{
-        user_id: ''
+        user_id: '',
+        content: ''
       }
     }
   },
@@ -47,6 +50,7 @@ export default {
   },
   activated(){
     document.title = '会话中'
+    this.user = common.getStore('user') || {}
     this.msgForm.user_id = this.$route.query.user_id || '';
   },
   methods:{
@@ -55,6 +59,12 @@ export default {
         console.log(res)
       })
     },
+    notice(){
+      const socket_id = common.getStore('user').socket_id;
+      ajax.post('message/notice', {socket_id,content:this.msgForm.content}).then(res=>{
+        common.alert(res.msg)
+      })
+    }
   }
 };
 </script>
