@@ -3,10 +3,10 @@
   width: 100%;box-sizing: border-box;
 }
 .introduce{
-  width: 100%;height: 5.5rem;margin-bottom:2rem;background: #eee;padding: 0.5rem;box-sizing: border-box;font-size: 0.35rem;
+  width: 100%;height: 5.5rem;margin-bottom:2rem;background: #eee;padding: 0.5rem;box-sizing: border-box;font-size: 0.6rem;
 }
 .introduce .title{
-  color: #33c9d4;font-size: 0.6rem;
+  color: #33c9d4;font-size: 0.7rem;
 }
 .introduce p{
   padding-left: 0.5rem;margin-top: 0.6rem;color: #666;
@@ -16,7 +16,7 @@
   width: 100%;padding:0 0.8rem;box-sizing: border-box;
 }
 .form .item{
-  position: relative;font-size: 0.5rem;color: #666;
+  position: relative;font-size: 0.7rem;color: #666;
 }
 .form .item .send{
   position: absolute;top:0.62rem;right:0;color: #33c9d4;font-size: 0.65rem;
@@ -44,6 +44,9 @@
       <p>3、密码至少含有2位字母</p>
     </div>
     <div class="form df-col">
+      <div class="item">
+        <input v-model="userForm.nickname" type="text" class="inp" placeholder="昵称">
+      </div>
       <div class="item">
         <div @click="sendCheck" class="send">发送验证码</div>
         <input v-model="adopt_num" type="text" class="inp" placeholder="手机号 / 邮箱">
@@ -76,6 +79,7 @@ export default {
         phone: '',
         email: '',
         check_num: '',
+        nickname: '',
         pwd: ''
       },
       saving: false
@@ -148,6 +152,10 @@ export default {
       })
     },
     checkForm(){
+      if(this.userForm.nickname === ''){
+        common.alert('昵称不能为空！')
+        return false
+      }
       if(this.adopt_num === ''){
         common.alert('手机号 / 邮箱不能为空！')
         return false

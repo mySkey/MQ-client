@@ -38,6 +38,9 @@ export let ajax = {
           'Token': common.getLStore('token') || ''
         }
       }).then((res) => {
+        if (res.code == 402) {
+          this.$router.replace('/login')
+        }
         return resolve(res.data);
       });
     }).catch((err) => {

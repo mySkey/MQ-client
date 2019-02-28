@@ -1,4 +1,6 @@
 global.common = {
+  secret: 'mySkey',
+  
   setStore: function (_k, _v) {
     var v = JSON.stringify(_v);
     sessionStorage.setItem(_k, v);

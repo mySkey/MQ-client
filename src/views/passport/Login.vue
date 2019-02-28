@@ -6,7 +6,7 @@
   margin-top: 3.5rem;
 }
 .login .content{
-  width: 100%;font-size: 0.35rem;margin-top: 2rem;
+  width: 100%;font-size: 0.75rem;margin-top: 2rem;
 }
 .login .content .write{
   border-bottom: 1px solid #eee;align-items: center;padding: 1rem 0 0 0;
@@ -22,7 +22,7 @@
   width: 100%;height: 2rem;line-height:2rem;font-size:0.8rem;letter-spacing: 0.35rem;text-align:center;background: #33c9d4;color: #fff;margin-top:2rem;border-radius: 5px;
 }
 .login .tip{
-  margin-top:0.6rem;font-size: 0.3rem;color: #33c9d4;
+  margin-top:0.8rem;font-size: 0.6rem;color: #33c9d4;
 }
 </style>
 <template>
@@ -62,9 +62,8 @@ export default {
   },
   activated(){
     document.title = '用户登录'
-    // this.userForm.name = '1663654533@qq.com'
-    // this.userForm.pwd = 'qq1663654533'
-    this.userForm.socket_id = common.getStore('user').socket_id || ''
+    this.userForm.socket_id = common.getLStore('user').socket_id || ''
+    this.userForm.name = common.getLStore('user').email || ''
     if(this.userForm.pwd && this.userForm.name) this.login();
   },
   methods:{
@@ -77,7 +76,7 @@ export default {
         common.hideLoading()
         if(res.code == 0){
           common.setLStore('token', res.data.token)
-          common.setStore('user', { email:res.data.email,socket_id:this.userForm.socket_id })
+          common.setLStore('user', { email:res.data.email,socket_id:this.userForm.socket_id })
           this.$router.replace('/message')
         }else{
           common.alert(res.msg)

@@ -12,22 +12,20 @@ export default {
   },
   sockets: {
     connect() {
+      console.log('socket connected !')
       this.id = this.$socket.id;
-      console.log('socket connected ' + this.id)
-      common.setStore('user', { socket_id: this.id })
       ajax.post('user/updateSocket', {socket_id:this.id}).then(res=>{
-        common.setStore('user', { email:res.data.email,socket_id:this.id })
+        if(res.code == 0){
+          let user = Object.assign({socket_id:this.id}, res.data.user, common.getLStore('user'))
+          common.setLStore('user', user)
+        }
       })
-      //this.$router.replace('/login') //后台接口重启后需重新验证
     },
     notice(val) {
-      //console.log('公告： ' + val);
-      this.$emit('notice', val)
+      this.$store.commit('saveNotice', val)
     },
-    chat(val){
-      console.log('聊天： ' + val);
-      common.alert(val.from.email + '想告诉你： ' + val.content)
-      this.$emit('chat', val)
+    chat(res){
+      this.$store.commit('receiveChat', res.from)
     }
   },
   methods:{
